@@ -1,0 +1,37 @@
+version: "3.7"
+
+services:
+  panel:
+    container_name: anderva_panel
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "127.0.0.1:3081:80"
+    depends_on:
+      - mongo
+      - rest_api
+  mongo:
+    image: mongo:4.4.4
+    container_name: anderva_mongo
+    restart: always
+    ports:
+      - "127.0.0.1:27017:27017"
+    volumes:
+      - anderva_mongo_data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=dk09e1209
+  rest_api:
+    container_name: anderva_rest_api
+    restart: always
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:3080:3000"
+    depends_on:
+      - mongo
+volumes:
+  anderva_mongo_data:

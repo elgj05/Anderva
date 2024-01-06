@@ -1,0 +1,66 @@
+
+# to deploy use docker-compose
+
+docker-compose up -d --build
+
+
+-------------------------
+
+DATA MODELS
+
+# User
+name
+email
+password
+role
+
+# Business
+name
+image
+phone
+moreInfoUrl
+categoryId
+couponCode
+couponDescription
+locationAddress
+locationUrl
+description
+
+# Category
+name
+
+# Article
+title
+image
+videoUrl
+description
+
+# Event
+title
+image
+description
+eventUrl
+location
+datetimeStart
+datetimeEnd
+createdBy
+
+
+-------------------------
+
+db
+
+root:dk09e1209
+
+docker run -d \
+  -v anderva_mongo_data:/data/db \
+  -p "127.0.0.1:27017:27017" \
+  -e MONGO_INITDB_ROOT_USERNAME=root \
+  -e MONGO_INITDB_ROOT_PASSWORD=dk09e1209 \
+  --network-alias anderva_mongo \
+  --hostname anderva_mongo \
+  --name anderva_mongo \
+  mongo:latest
+
+
+mongodb://root:dk09e1209@localhost:27017/?authSource=admin&readPreference=primary&ssl=false
